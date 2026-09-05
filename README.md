@@ -60,16 +60,28 @@
 cd ~/rokey_ws/src
 git clone git@github.com:yujh5537/rokey_idc_patrol.git
 
-# 2) 의존성 설치
+# 2) ROS 의존성 설치
 cd ~/rokey_ws
 rosdep install --from-paths src --ignore-src -r -y
 
-# 3) 빌드
+# 3) Python(pip) 의존성 설치 — rosdep이 잡아주지 않습니다
+source ~/venvs/rokey_venv/bin/activate
+pip install -r ~/rokey_ws/src/rokey_idc_patrol/requirements.txt
+
+# 4) 빌드
+cd ~/rokey_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-`.bashrc`에 `~/rokey_ws/install/setup.bash` 소싱이 이미 되어 있다면 3)의 `source`만 새 터미널에서 생략 가능합니다.
+3)을 건너뛰면 `ultralytics`, `Flask`가 없어 `idc_percept` / `idc_cctv` / `idc_server`가 실행되지 않습니다.
+[requirements.txt](requirements.txt)는 버전을 고정해 두었으니 임의로 올리지 마세요 —
+특히 `numpy<2.0`은 numpy 2.x에서 `cv_bridge` import가 깨지는 것을 막는 제약이고,
+`ultralytics`는 마이너 버전마다 API가 갈립니다. 버전을 바꿔야 하면 공통 파일 변경이므로
+[CONTRIBUTING 3-3](.github/CONTRIBUTING.md) 규칙대로 사전 공지 후 진행하세요.
+
+`.bashrc`에 `~/venvs/rokey_venv/bin/activate` 와 `~/rokey_ws/install/setup.bash` 소싱이
+이미 들어 있다면 3)·4)의 `source` 줄은 새 터미널에서 생략 가능합니다 (교육 환경 기본 세팅).
 
 ## 4. 실행
 
@@ -79,8 +91,17 @@ cd ~/rokey_ws/src/rokey_idc_patrol
 cp .env.example .env      # 값 채워 넣기, .env 는 커밋 금지
 
 # 통합 실행
+source ~/venvs/rokey_venv/bin/activate
 ros2 launch idc_bringup patrol.launch.py
 ```
+
+현재 `patrol.launch.py`는 파라미터 로딩과 로봇별 네임스페이스(`/robot1`, `/robot2`) 그룹만
+살아 있고, 각 노드는 주석 처리되어 있습니다. 모듈이 완성되면 담당자가 **자기 모듈 블록의
+주석만** 해제하세요. 아직 없는 노드를 미리 켜두면 launch 전체가 죽어서 원인 파악이 어려워집니다.
+
+공통 수치(순찰 속도, 정렬 허용 오차, 배터리 임계값, 리포트 주기 등)는
+[idc_bringup/config/params.yaml](idc_bringup/config/params.yaml) 한 곳에 모여 있습니다.
+코드에 상수로 박아 넣지 마세요 — 8명이 각자 다른 값을 쓰게 됩니다.
 
 > 각 패키지의 개별 실행 명령어는 담당자가 이 절에 추가합니다.
 > [CONTRIBUTING 9-3](.github/CONTRIBUTING.md) — **누구나 복사해서 그대로 실행 가능한 형태**여야 하며,

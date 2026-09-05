@@ -1,0 +1,26 @@
+/**:
+  ros__parameters:
+    use_sim_time: false
+
+/**/patrol_node:
+  ros__parameters:
+    patrol_speed: 0.15          # SR-H01: 0.15~0.2 m/s
+    max_speed: 0.2
+    inspect_dwell_sec: 5.0      # 점검 지점 정렬·촬영
+    align_tolerance_deg: 3.0    # AC: ±3°
+    align_tolerance_m: 0.05     # AC: ±5cm
+    battery_start_min: 40.0     # BRD 3.9.3
+    battery_return_min: 25.0    # BRD 3.9.1
+
+/**/detect_node:
+  ros__parameters:
+    model_path: ''              # .env / 실행 인자로 주입 (하드코딩 금지)
+    conf_threshold: 0.5
+    input_width: 640
+    input_height: 480
+
+event_engine_node:
+  ros__parameters:
+    candidate_report_sec: 3.0   # SR-Q01
+    confirm_report_sec: 30.0
+    escalation_sec: 300.0

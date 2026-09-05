@@ -1,0 +1,12 @@
+# venv(rokey_venv) 안에서: pip install -r requirements.txt
+#
+# 버전을 고정하는 이유:
+# - ultralytics 는 마이너 버전 간 API가 갈려서 8명 환경 분기의 1순위 원인
+# - numpy 2.x 가 올라오면 ROS 2 Jazzy 의 cv_bridge import 가 깨짐 → 2.0 미만 고정
+ultralytics==8.3.0
+opencv-python==4.9.0.80
+numpy<2.0            # cv_bridge / ROS 2 Jazzy 호환
+Flask==3.0.3
+Flask-Login==0.6.3
+python-dotenv==1.0.1
+PyYAML==6.0.2
