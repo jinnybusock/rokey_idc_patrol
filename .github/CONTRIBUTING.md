@@ -318,7 +318,7 @@ config_path = Path(__file__).resolve().parent / "config" / "params.yaml"
 
 ```
 # PM + 백업 리뷰어 1명을 Code Owner로 지정
-* @yujh5537
+* @yujh5537 @EuiseokJeongNZ
 ```
 
 - 1-2의 **Require review from Code Owners** 설정과 함께 사용하면, 목록에 있는 사람(PM 또는 백업)의 승인 없이는 Merge 자체가 불가능해짐
