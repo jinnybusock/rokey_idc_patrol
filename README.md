@@ -135,7 +135,32 @@ mkdir -p idc_percept/models idc_cctv/models
 - `*.db` / `*.sqlite` — 실행할 때마다 바뀌어 충돌을 유발합니다. 스키마(`schema.sql`)와 시드 데이터만 커밋하세요.
 - `.env`, 인증서, 키 파일 — [CONTRIBUTING 7장](.github/CONTRIBUTING.md) 참조.
 
-## 8. 협업 규칙
+## 8. 트러블슈팅
+
+### `colcon test` 가 전 패키지에서 실패 — `PluginValidationError`
+
+```
+pluggy._manager.PluginValidationError: Plugin 'launch_testing' for hook 'pytest_pycollect_makemodule'
+hookimpl definition: pytest_pycollect_makemodule(path, parent)
+```
+
+venv 에 `pytest` 8.x 이상이 설치돼 ROS 2 Jazzy 의 `launch_testing` 플러그인과
+훅 시그니처가 어긋난 것입니다. 특정 패키지가 아니라 **전 패키지**가 같이 깨지는 것이 특징입니다.
+
+```bash
+source ~/venvs/rokey_venv/bin/activate
+python3 -c "import pytest; print(pytest.__version__, pytest.__file__)"   # 8.x 이상이면 해당
+pip install -U "pytest<8" "pytest-rerunfailures==16.1"
+```
+
+`pip install -r requirements.txt` 만으로는 이미 설치된 상위 버전이 내려가지 않을 수 있으므로
+위 `-U` 명령을 직접 실행하세요. 확인:
+
+```bash
+cd ~/rokey_ws && colcon test --packages-select idc_bringup && colcon test-result --verbose
+```
+
+## 9. 협업 규칙
 
 작업 시작 전 반드시 읽어주세요 → **[.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)**
 
@@ -144,6 +169,6 @@ mkdir -p idc_percept/models idc_cctv/models
 - Merge 방식: **Squash and merge** 전용, 브랜치는 merge 후에도 유지
 - 트러블슈팅은 Issue 템플릿(`bug_report.md`)으로 기록
 
-## 9. 라이선스
+## 10. 라이선스
 
 각 패키지는 Apache-2.0 (각 패키지의 `LICENSE` 파일 참조).

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""IDC 순찰로봇 통합 bringup.
+"""
+IDC 순찰로봇 통합 bringup.
 
 모듈이 완성될 때마다 아래 Node 블록 주석을 해제한다.
 담당자는 자기 모듈 블록만 건드리고, 구조 변경은 사전 공지한다. (CONTRIBUTING 3-3)

@@ -308,6 +308,22 @@ config_path = Path(__file__).resolve().parent / "config" / "params.yaml"
 - 사용자명, 설치 경로에 관계없이 누구나 위 명령어 그대로 실행되면 통과
 - PR 리뷰 시 하드코딩된 절대 경로가 있는지 확인
 
+### 9-4. 린트 기준은 `ament` 설정을 따른다
+
+스타일 지적은 **`colcon test` 가 실제로 돌리는 `ament_flake8` / `ament_pep257` 기준**으로만 합니다.
+터미널에서 맨 `flake8` 을 돌린 결과를 기준 삼으면, 통과할 코드를 계속 고치게 됩니다.
+
+```bash
+# 이것이 기준
+colcon test --packages-select <패키지명> && colcon test-result --verbose
+```
+
+`ament_flake8` 은 `import-order-style=google` 을 쓰고 `D100`~`D107`(docstring 누락) 등을
+무시하도록 설정돼 있어, 기본 `flake8` 과 결과가 다릅니다.
+설정 원본: `/opt/ros/jazzy/lib/python3.12/site-packages/ament_flake8/configuration/ament_flake8.ini`
+
+> `colcon test` 가 전 패키지에서 `PluginValidationError` 로 깨진다면 코드 문제가 아니라
+> venv 의 pytest 버전 문제입니다. README 트러블슈팅 절을 보세요.
 ---
 
 ## 10. PM 알림 & 코드 리뷰

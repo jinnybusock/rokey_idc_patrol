@@ -10,3 +10,11 @@ Flask==3.0.3
 Flask-Login==0.6.3
 python-dotenv==1.0.1
 PyYAML==6.0.2
+
+# --- 테스트 도구: ROS 2 Jazzy 가 검증한 조합에 맞춘다 ---
+# launch_testing / launch_testing_ros 의 pytest 훅이 pytest 8에서 제거된
+# pytest_pycollect_makemodule(path, ...) 시그니처를 쓴다. venv 에 pytest 8 이상이
+# 깔리면 PluginValidationError 로 colcon test 가 전 패키지에서 통째로 깨진다.
+pytest<8
+# pytest-rerunfailures 16.2+ 는 pytest>=8.2 를 요구해 위 핀과 충돌한다.
+pytest-rerunfailures==16.1
