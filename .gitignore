@@ -1,0 +1,42 @@
+# ROS2 / Python 빌드 산출물
+build/
+install/
+log/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# 민감 정보 - 절대 커밋 금지
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+credentials.json
+secrets.yaml
+secrets.yml
+
+# 모델 가중치·학습 산출물 (GitHub 100MB 제한)
+*.pt
+*.onnx
+*.engine
+datasets/
+runs/
+
+# 런타임 생성물
+*.db
+*.sqlite
+*.sqlite3
+evidence/
+rosbag2_*/
+*.bag
+*.mp4
+*.avi
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
