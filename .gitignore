@@ -1,42 +1,25 @@
-# ROS2 / Python 빌드 산출물
+# colcon 산출물 — 절대 커밋 금지 (CONTRIBUTING 3-5)
 build/
 install/
 log/
+# Python
 __pycache__/
 *.pyc
 *.egg-info/
-
-# 민감 정보 - 절대 커밋 금지
-.env
-.env.*
-!.env.example
-*.pem
-*.key
-*.crt
-*.p12
-credentials.json
-secrets.yaml
-secrets.yml
-
-# 모델 가중치·학습 산출물 (GitHub 100MB 제한)
+.venv/ venv/
+# 데이터·모델·rosbag — 공유 드라이브 사용, Git 금지
+data/
+datasets/
 *.pt
 *.onnx
-*.engine
-datasets/
-runs/
-
-# 런타임 생성물
-*.db
-*.sqlite
-*.sqlite3
-evidence/
-rosbag2_*/
-*.bag
-*.mp4
-*.avi
-
-# Editor / OS
+*.db3
+*.mcap
+rosbag*/
+# 민감 정보 (CONTRIBUTING 7)
+.env
+*.pem
+*.key
+secrets*/
+# IDE
 .vscode/
 .idea/
-*.swp
-.DS_Store
