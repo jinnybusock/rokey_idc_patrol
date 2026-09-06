@@ -210,18 +210,15 @@ Error
 
 ### `.gitignore`
 ```
-# ROS2 / Python 빌드 산출물
 build/
 install/
 log/
 __pycache__/
 *.pyc
-*.egg-info/
 
 # 민감 정보 - 절대 커밋 금지
 .env
 .env.*
-!.env.example
 *.pem
 *.key
 *.crt
@@ -229,29 +226,6 @@ __pycache__/
 credentials.json
 secrets.yaml
 secrets.yml
-
-# 모델 가중치·학습 산출물 (GitHub 100MB 제한)
-*.pt
-*.onnx
-*.engine
-datasets/
-runs/
-
-# 런타임 생성물
-*.db
-*.sqlite
-*.sqlite3
-evidence/
-rosbag2_*/
-*.bag
-*.mp4
-*.avi
-
-# Editor / OS
-.vscode/
-.idea/
-*.swp
-.DS_Store
 ```
 - 위 목록은 실수로라도 Git에 잡히지 않도록 `.gitignore`에 기본 등록
 - 그래도 실제로 Secret 값이 든 파일을 커밋하기 전에는 항상 `git status`로 한 번 더 확인
@@ -287,11 +261,11 @@ rosbag2_*/
 
 ```python
 # 금지 - 본인 환경에서만 동작
-config_path = "/home/injae/rokey_ws/src/rokey_idc_patrol/idc_bringup/config/params.yaml"
+config_path = "/home/injae/rokey_ws/src/rackguard/config/params.yaml"
 
 # 권장 - 패키지 기준 동적 경로
 from ament_index_python.packages import get_package_share_directory
-config_path = os.path.join(get_package_share_directory('idc_bringup'), 'config', 'params.yaml')
+config_path = os.path.join(get_package_share_directory('rackguard'), 'config', 'params.yaml')
 
 # 스크립트 파일 기준 상대 경로가 필요할 때
 from pathlib import Path
@@ -304,26 +278,10 @@ config_path = Path(__file__).resolve().parent / "config" / "params.yaml"
 ### 9-3. 실행 명령어 통일
 
 - 각 패키지/기능의 실행 명령어는 README(또는 패키지 내 `README.md`)에 그대로 복사해서 쓸 수 있게 명시
-  - 예: `ros2 launch idc_bringup patrol.launch.py`
+  - 예: `ros2 launch rackguard_bringup patrol.launch.py`
 - 사용자명, 설치 경로에 관계없이 누구나 위 명령어 그대로 실행되면 통과
 - PR 리뷰 시 하드코딩된 절대 경로가 있는지 확인
 
-### 9-4. 린트 기준은 `ament` 설정을 따른다
-
-스타일 지적은 **`colcon test` 가 실제로 돌리는 `ament_flake8` / `ament_pep257` 기준**으로만 합니다.
-터미널에서 맨 `flake8` 을 돌린 결과를 기준 삼으면, 통과할 코드를 계속 고치게 됩니다.
-
-```bash
-# 이것이 기준
-colcon test --packages-select <패키지명> && colcon test-result --verbose
-```
-
-`ament_flake8` 은 `import-order-style=google` 을 쓰고 `D100`~`D107`(docstring 누락) 등을
-무시하도록 설정돼 있어, 기본 `flake8` 과 결과가 다릅니다.
-설정 원본: `/opt/ros/jazzy/lib/python3.12/site-packages/ament_flake8/configuration/ament_flake8.ini`
-
-> `colcon test` 가 전 패키지에서 `PluginValidationError` 로 깨진다면 코드 문제가 아니라
-> venv 의 pytest 버전 문제입니다. README 트러블슈팅 절을 보세요.
 ---
 
 ## 10. PM 알림 & 코드 리뷰
@@ -334,7 +292,7 @@ colcon test --packages-select <패키지명> && colcon test-result --verbose
 
 ```
 # PM + 백업 리뷰어 1명을 Code Owner로 지정
-* @yujh5537 @EuiseokJeongNZ
+* @PM의_GitHub_아이디 @백업_GitHub_아이디
 ```
 
 - 1-2의 **Require review from Code Owners** 설정과 함께 사용하면, 목록에 있는 사람(PM 또는 백업)의 승인 없이는 Merge 자체가 불가능해짐
