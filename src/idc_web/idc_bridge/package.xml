@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>idc_server</name>
+  <name>idc_bridge</name>
   <version>0.1.0</version>
-  <description>Flask+SocketIO+rclpy 관제 서버·UI (W)</description>
+  <description>ROS 2 to MQTT bridge for the IDC patrol control/web boundary (W)</description>
   <maintainer email="yujh5537@users.noreply.github.com">yujh5537</maintainer>
   <license>Apache-2.0</license>
   <depend>rclpy</depend>
@@ -11,6 +11,7 @@
   <depend>geometry_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>idc_msgs</depend>
+  <exec_depend>python3-paho-mqtt</exec_depend>
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>python3-pytest</test_depend>

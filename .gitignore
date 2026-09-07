@@ -6,7 +6,12 @@ log/
 __pycache__/
 *.pyc
 *.egg-info/
-.venv/ venv/
+.venv/
+venv/
+# Node / Vite
+node_modules/
+dist/
+npm-debug.log*
 # 데이터·모델·rosbag — 공유 드라이브 사용, Git 금지
 data/
 datasets/
@@ -23,3 +28,6 @@ secrets*/
 # IDE
 .vscode/
 .idea/
+
+# TypeScript build cache
+*.tsbuildinfo
